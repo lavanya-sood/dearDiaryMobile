@@ -13,21 +13,34 @@ import { Feather } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import TabBar from "./navigation/TabBar";
+import { Provider } from "react-redux";
+import logger from "redux-logger";
+import { createStore, applyMiddleware } from "redux";
+// import Todo from "./component/Todo";
+import rootReducer from "./reducers/rootReducer";
+import { configureStore } from "@reduxjs/toolkit";
+// const store = createStore(rootReducer, applyMiddleware(logger));
+const store = configureStore({
+  reducer: rootReducer,
+});
 
-const Tab = createBottomTabNavigator();
+// const Tab = createBottomTabNavigator();
 
-const CustomTabBarIcon = ({ children, onPress }) => (
-  <TouchableOpacity onPress={onPress} style={styles.mainIcon}>
-    <View style={styles.mainIconInterior}>{children}</View>
-  </TouchableOpacity>
-);
+// const CustomTabBarIcon = ({ children, onPress }) => (
+//   <TouchableOpacity onPress={onPress} style={styles.mainIcon}>
+//     <View style={styles.mainIconInterior}>{children}</View>
+//   </TouchableOpacity>
+// );
 
 export default function App() {
   return (
     // <LinearGradient style={styles.container} colors={["#f7d6e0", "#fcdfc7"]}>
-    <NavigationContainer>
-      <TabBar />
-    </NavigationContainer>
+    <Provider store={store}>
+      <NavigationContainer>
+        <TabBar />
+      </NavigationContainer>
+    </Provider>
+
     // </LinearGradient>
   );
 }

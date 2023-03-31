@@ -42,10 +42,7 @@ export default function TabBar() {
           paddingBottom: 0,
           ...styles.shadow,
         },
-      }}
-      tabBarOptions={{
-        showLabel: false,
-        showIcon: false,
+        tabBarShowLabel: false,
       }}
     >
       <Tab.Screen
@@ -122,9 +119,6 @@ export default function TabBar() {
         options={{
           tabBarLabel: "Profile",
           tabBarIcon: ({ focused, color, size }) => (
-            // <View>
-            //   <Text> Hi </Text>
-            // </View>
             <View style={{ justifyContent: "center", alignItems: "center" }}>
               <FontAwesome name="user" color={color} size={size} />
               <Text style={{ color: color, fontSize: 10 }}> Profile </Text>
