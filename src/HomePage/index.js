@@ -8,7 +8,7 @@ export default function HomePage() {
   console.log("DATA");
   console.log(data);
   return (
-    <LinearGradient style={styles.container} colors={["#f7d6e0", "#fcdfc7"]}>
+    <LinearGradient style={styles.container} colors={["#b2f7ef", "#eff6f6"]}>
       {/* <Text>Home Page</Text> */}
 
       <View style={styles.parent}>

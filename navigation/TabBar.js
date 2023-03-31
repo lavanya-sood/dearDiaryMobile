@@ -27,7 +27,7 @@ export default function TabBar() {
 
     <Tab.Navigator
       screenOptions={{
-        tabBarActiveTintColor: "#f08dbf",
+        tabBarActiveTintColor: "#3fadc4",
         headerShown: false,
         tabBarStyle: {
           position: "absolute",
@@ -139,12 +139,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   shadow: {
-    shadowColor: "#f2b5d4",
+    shadowColor: "#7bdff2",
     shadowOffset: {
       width: 0,
       height: 10,
     },
-    shadowOpacity: 0.5,
+    shadowOpacity: 0.2,
     shadowRadius: 3.5,
     elevation: 5,
   },
@@ -152,12 +152,12 @@ const styles = StyleSheet.create({
     top: -30,
     justifyContent: "center",
     alignItems: "center",
-    shadowColor: "#f2b5d4",
+    shadowColor: "#7bdff2",
     shadowOffset: {
       width: 0,
       height: 10,
     },
-    shadowOpacity: 0.5,
+    shadowOpacity: 0.2,
     shadowRadius: 3.5,
     elevation: 5,
   },
@@ -165,6 +165,6 @@ const styles = StyleSheet.create({
     width: 70,
     height: 70,
     borderRadius: 35,
-    backgroundColor: "#f08dbf",
+    backgroundColor: "#3fadc4",
   },
 });

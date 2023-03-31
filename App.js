@@ -1,24 +1,15 @@
-import { LinearGradient } from "expo-linear-gradient";
-import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import HomePage from "./src/HomePage";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import Goals from "./src/Goals";
-import Thoughts from "./src/Thoughts";
-import Profile from "./src/Profile";
+
 import { NavigationContainer } from "@react-navigation/native";
-import Create from "./src/Create";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { Feather } from "@expo/vector-icons";
-import { FontAwesome } from "@expo/vector-icons";
-import { Ionicons } from "@expo/vector-icons";
+
 import TabBar from "./navigation/TabBar";
 import { Provider } from "react-redux";
-import logger from "redux-logger";
-import { createStore, applyMiddleware } from "redux";
+
 // import Todo from "./component/Todo";
 import rootReducer from "./reducers/rootReducer";
 import { configureStore } from "@reduxjs/toolkit";
+import { useFonts } from "expo-font";
+// import './assets/fonts/Patrick_Hand/'
 // const store = createStore(rootReducer, applyMiddleware(logger));
 const store = configureStore({
   reducer: rootReducer,
@@ -33,6 +24,13 @@ const store = configureStore({
 // );
 
 export default function App() {
+  const [fontsLoaded] = useFonts({
+    "Patrick-Hand": require("./assets/fonts/Patrick_Hand/PatrickHand-Regular.ttf"),
+    "Nunito-Sans": require("./assets/fonts/Nunito_Sans/NunitoSans-Regular.ttf"),
+    "Nunito-Sans-Bold": require("./assets/fonts/Nunito_Sans/NunitoSans-Bold.ttf"),
+    Comfortaa: require("./assets/fonts/Comfortaa/Comfortaa-VariableFont_wght.ttf"),
+  });
+
   return (
     // <LinearGradient style={styles.container} colors={["#f7d6e0", "#fcdfc7"]}>
     <Provider store={store}>
@@ -52,7 +50,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   shadow: {
-    shadowColor: "#f2b5d4",
+    shadowColor: "#216773",
     shadowOffset: {
       width: 0,
       height: 10,
@@ -65,13 +63,13 @@ const styles = StyleSheet.create({
     top: -30,
     justifyContent: "center",
     alignItems: "center",
-    shadowColor: "#f2b5d4",
+    shadowColor: "#216773",
     shadowOffset: {
       width: 0,
-      height: 10,
+      height: 5,
     },
-    shadowOpacity: 0.5,
-    shadowRadius: 3.5,
+    shadowOpacity: 0.2,
+    shadowRadius: 2.5,
     elevation: 5,
   },
   mainIconInterior: {
