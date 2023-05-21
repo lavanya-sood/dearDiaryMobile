@@ -1,5 +1,5 @@
 import { LinearGradient } from "expo-linear-gradient";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   Pressable,
   SafeAreaView,
@@ -9,8 +9,33 @@ import {
   View,
 } from "react-native";
 import { setCustomText } from "react-native-global-props";
+import { useDispatch, useSelector } from "react-redux";
+import moment from "moment";
+import { AddThought } from "../../actions/thoughtAction";
 
 export default function Create() {
+  const dispatch = useDispatch();
+  const data = useSelector((state) => state);
+  const thoughts = data.thoughts;
+  console.log(thoughts);
+
+  const [thought, setThought] = useState("");
+  const [emotion, setEmotion] = useState("");
+
+  const saveThought = () => {
+    let id = 1;
+    if (thoughts.length >= 1) {
+      id = thoughts[thoughts.length - 1].id + 1;
+    }
+    const currThought = {
+      id: id,
+      thought: thought,
+      emotion: emotion,
+      date: moment(),
+    };
+    console.log(currThought);
+    dispatch(AddThought(currThought));
+  };
   // const customTextProps = {
   //   style: {
   //     fontFamily: "Patrick-Hand",
@@ -29,8 +54,8 @@ export default function Create() {
           <Text style={styles.subheading}>What are you thinking of?</Text>
           <TextInput
             style={styles.input}
-            // onChangeText={onChangeNumber}
-            // value={number}
+            onChangeText={setThought}
+            value={thought}
             // placeholder="useless placeholder"
             // keyboardType="numeric"
             multiline
@@ -40,29 +65,44 @@ export default function Create() {
             <Text style={styles.subheading}>How does it make you feel?</Text>
 
             <View style={styles.emotions}>
-              <View style={styles.emotion}>
+              <Pressable
+                style={styles.emotion}
+                onPress={() => setEmotion("upset")}
+              >
                 <View style={styles.circle}></View>
                 <Text style={styles.emotionText}>Upset</Text>
-              </View>
-              <View style={styles.emotion}>
+              </Pressable>
+              <Pressable
+                style={styles.emotion}
+                onPress={() => setEmotion("sad")}
+              >
                 <View style={styles.circle}></View>
                 <Text style={styles.emotionText}>Sad</Text>
-              </View>
-              <View style={styles.emotion}>
+              </Pressable>
+              <Pressable
+                style={styles.emotion}
+                onPress={() => setEmotion("neutral")}
+              >
                 <View style={styles.circle}></View>
                 <Text style={styles.emotionText}>Neutral</Text>
-              </View>
-              <View style={styles.emotion}>
+              </Pressable>
+              <Pressable
+                style={styles.emotion}
+                onPress={() => setEmotion("happy")}
+              >
                 <View style={styles.circle}></View>
                 <Text style={styles.emotionText}>Happy</Text>
-              </View>
-              <View style={styles.emotion}>
+              </Pressable>
+              <Pressable
+                style={styles.emotion}
+                onPress={() => setEmotion("excited")}
+              >
                 <View style={styles.circle}></View>
                 <Text style={styles.emotionText}>Excited</Text>
-              </View>
+              </Pressable>
             </View>
           </View>
-          <Pressable style={styles.button}>
+          <Pressable style={styles.button} onPress={saveThought}>
             <Text style={styles.buttonText}>Next</Text>
           </Pressable>
         </View>

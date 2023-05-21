@@ -3,6 +3,7 @@ import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import CalendarStrip from "react-native-calendar-strip";
 import moment from "moment";
+import { useEffect, useState } from "react";
 
 export default function HomePage() {
   const dispatch = useDispatch();
@@ -21,40 +22,25 @@ export default function HomePage() {
   ];
   const data = useSelector((state) => state);
   const today = moment();
-  console.log("DATA");
+
+  const [selectedDate, setSelectedDate] = useState(today);
+  // console.log("DATA");
   console.log(data);
+
+  useEffect(() => {
+    console.log("CHANGE DATA");
+  }, [selectedDate]);
   return (
     <LinearGradient style={styles.container} colors={["#b2f7ef", "#eff6f6"]}>
       {/* <Text>Home Page</Text> */}
 
       <View style={styles.parent}>
         <View style={styles.child}>
-          <Text>Today</Text>
-          <Text>Today</Text>
-          <Text>Today</Text>
-          {/* <CalendarStrip
-            scrollable
-            calendarAnimation={{ type: "sequence", duration: 30 }}
-            daySelectionAnimation={{
-              type: "border",
-              duration: 200,
-              borderWidth: 1,
-              borderHighlightColor: "white",
-            }}
-            style={{ height: 100 }}
-            // calendarHeaderStyle={{ color: "white" }}
-            showMonth={false}
-            calendarColor={"#7743CE"}
-            dateNumberStyle={{ color: "white", fontSize: 30 }}
-            dateNameStyle={{ color: "white", fontSize: 15 }}
-            highlightDateNumberStyle={{ color: "white", fontSize: 30 }}
-            highlightDateNameStyle={{ color: "yellow" }}
-            disabledDateNameStyle={{ color: "grey" }}
-            disabledDateNumberStyle={{ color: "grey" }}
-            iconContainer={{ flex: 0.1 }}
-            responsiveSizingOffset={23} */}
-          {/* /> */}
+          <Text style={styles.heading}>Today</Text>
+          <Text style={styles.subheading}>Saturday, April 1</Text>
           <CalendarStrip
+            scrollable={true}
+            scrollerPaging={true}
             calendarAnimation={{ type: "sequence", duration: 10 }}
             daySelectionAnimation={{
               type: "background",
@@ -64,41 +50,49 @@ export default function HomePage() {
               highlightColor: "#3fadc4",
             }}
             showMonth={false}
-            style={{ height: 100, paddingTop: 10, paddingBottom: 10 }}
+            style={{ height: 100, paddingTop: 5, paddingBottom: 10 }}
             calendarHeaderStyle={{ color: "black" }}
             dateNumberStyle={{
               color: "black",
-              fontSize: 20,
+              fontSize: 15,
               fontFamily: "Nunito-Sans-Bold",
             }}
             dateNameStyle={{
               color: "black",
-              fontSize: 12,
+              fontSize: 10,
               fontFamily: "Nunito-Sans",
             }}
+            // onDateSelected={(date) => setSelectedDate(date)}
             startingDate={today}
             selectedDate={today}
             highlightDateNumberStyle={{
               color: "#fff",
-              fontSize: 20,
+              fontSize: 15,
               fontFamily: "Nunito-Sans-Bold",
             }}
             highlightDateNameStyle={{
               color: "#fff",
-              fontSize: 12,
+              fontSize: 10,
               fontFamily: "Nunito-Sans",
             }}
+            // highlightDateContainerStyle={{ padding: 10 }}
             // datesWhitelist={datesWhitelist}
             datesBlacklist={datesBlacklist}
             iconContainer={{ flex: 0.1 }}
           />
         </View>
       </View>
-      <ScrollView>
-        <View>
-          <Text>Hey</Text>
+      <ScrollView
+        style={styles.pageCards}
+        contentContainerStyle={{ flexGrow: 1, alignItems: "center" }}
+      >
+        <View style={styles.thoughtBox}>
+          <Text>How has your day been?</Text>
+          <View>
+            <Text>You haven't entered any thoughts yet</Text>
+          </View>
         </View>
-        <View>
+        <View style={styles.thoughtBox}>
           <Text>Text2</Text>
         </View>
       </ScrollView>
@@ -120,8 +114,12 @@ const styles = StyleSheet.create({
     borderBottomStartRadius: 200,
     borderBottomEndRadius: 200,
     overflow: "hidden",
+    // alignItems: "center",
+    backgroundColor: "#ffffff",
+    zIndex: 1,
   },
   child: {
+    marginTop: 70,
     flex: 1,
     transform: [{ scaleX: 0.5 }],
 
@@ -129,5 +127,47 @@ const styles = StyleSheet.create({
     // alignItems: "center",
     // justifyContent: "center",
     width: "100%",
+  },
+  pageCards: {
+    // alignItems: "center",
+    zIndex: 2,
+    // position: "absolute",
+    top: -50,
+  },
+  thoughtBox: {
+    backgroundColor: "#f7fbff",
+    width: "80%",
+    padding: 20,
+    borderRadius: 15,
+    margin: 10,
+
+    shadowColor: "#7bdff2",
+    shadowOffset: {
+      width: 0,
+      height: 10,
+    },
+    shadowOpacity: 0.5,
+    shadowRadius: 3.5,
+    elevation: 5,
+  },
+  // goalsBox: {
+  //   backgroundColor: "pink",
+  //   width: "80%",
+  //   padding: 20,
+  //   borderRadius: 15,
+  //   margin: 10,
+  // },
+  heading: {
+    fontSize: 25,
+    fontFamily: "Nunito-Sans-Bold",
+    marginLeft: 20,
+    textTransform: "uppercase",
+    // fontWeight: "bold",
+  },
+  subheading: {
+    fontSize: 17,
+    fontFamily: "Nunito-Sans-Bold",
+    marginLeft: 20,
+    textTransform: "uppercase",
   },
 });

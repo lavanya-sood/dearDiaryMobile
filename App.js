@@ -13,6 +13,10 @@ import { useFonts } from "expo-font";
 // const store = createStore(rootReducer, applyMiddleware(logger));
 const store = configureStore({
   reducer: rootReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }),
 });
 
 // const Tab = createBottomTabNavigator();
