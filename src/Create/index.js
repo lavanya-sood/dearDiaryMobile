@@ -12,8 +12,9 @@ import { setCustomText } from "react-native-global-props";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 import { AddThought } from "../../actions/thoughtAction";
+import EmotionIcon from "../EmotionIcon";
 
-export default function Create() {
+export default function Create({ navigation }) {
   const dispatch = useDispatch();
   const data = useSelector((state) => state);
   const thoughts = data.thoughts;
@@ -33,8 +34,11 @@ export default function Create() {
       emotion: emotion,
       date: moment(),
     };
-    console.log(currThought);
+    // console.log(currThought);
     dispatch(AddThought(currThought));
+    setThought("");
+    setEmotion("");
+    navigation.navigate("Home");
   };
   // const customTextProps = {
   //   style: {
@@ -69,41 +73,41 @@ export default function Create() {
                 style={styles.emotion}
                 onPress={() => setEmotion("upset")}
               >
-                <View style={styles.circle}></View>
+                <EmotionIcon emotion="upset" />
                 <Text style={styles.emotionText}>Upset</Text>
               </Pressable>
               <Pressable
                 style={styles.emotion}
                 onPress={() => setEmotion("sad")}
               >
-                <View style={styles.circle}></View>
+                <EmotionIcon emotion="sad" />
                 <Text style={styles.emotionText}>Sad</Text>
               </Pressable>
               <Pressable
                 style={styles.emotion}
                 onPress={() => setEmotion("neutral")}
               >
-                <View style={styles.circle}></View>
+                <EmotionIcon emotion="neutral" />
                 <Text style={styles.emotionText}>Neutral</Text>
               </Pressable>
               <Pressable
                 style={styles.emotion}
                 onPress={() => setEmotion("happy")}
               >
-                <View style={styles.circle}></View>
+                <EmotionIcon emotion="happy" />
                 <Text style={styles.emotionText}>Happy</Text>
               </Pressable>
               <Pressable
                 style={styles.emotion}
                 onPress={() => setEmotion("excited")}
               >
-                <View style={styles.circle}></View>
+                <EmotionIcon emotion="excited" />
                 <Text style={styles.emotionText}>Excited</Text>
               </Pressable>
             </View>
           </View>
           <Pressable style={styles.button} onPress={saveThought}>
-            <Text style={styles.buttonText}>Next</Text>
+            <Text style={styles.buttonText}>Save</Text>
           </Pressable>
         </View>
       </SafeAreaView>

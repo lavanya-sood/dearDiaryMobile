@@ -4,8 +4,10 @@ const INITIAL_STATE = [];
 const thoughtReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case "ADD_THOUGHT":
-      console.log("IN HERE");
-      console.log(state);
+      // console.log("IN HERE");
+      // console.log(state);
+      return [...state, action.payload];
+    case "FIND_THOUGHT":
       return [...state, action.payload];
     default:
       return state;

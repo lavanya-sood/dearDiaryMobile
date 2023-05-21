@@ -1,9 +1,12 @@
 import { LinearGradient } from "expo-linear-gradient";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { FlatList, ScrollView, StyleSheet, Text, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import CalendarStrip from "react-native-calendar-strip";
 import moment from "moment";
 import { useEffect, useState } from "react";
+import Thought from "./Thought";
+import MaskView from "./maskView";
+import MaskedElement from "./maskElement";
 
 export default function HomePage() {
   const dispatch = useDispatch();
@@ -24,20 +27,41 @@ export default function HomePage() {
   const today = moment();
 
   const [selectedDate, setSelectedDate] = useState(today);
+  const [todayThoughts, setTodayThoughts] = useState([]);
   // console.log("DATA");
-  console.log(data);
+  // console.log(data);
 
   useEffect(() => {
-    console.log("CHANGE DATA");
-  }, [selectedDate]);
+    const select = selectedDate.startOf("day").format("LL");
+    // console.log(selectedDate.startOf("day").format("LL"));
+    // console.log(data);
+    // setTodayThoughts(data.filter)
+    const todayT = [];
+    data.thoughts.map((d) => {
+      // console.log(d);
+      const formattedDate = d.date.startOf("day").format("LL");
+      if (formattedDate === select) {
+        todayT.push(d);
+      }
+    });
+    console.log(todayT);
+    setTodayThoughts(todayT);
+  }, [selectedDate, data]);
   return (
     <LinearGradient style={styles.container} colors={["#b2f7ef", "#eff6f6"]}>
       {/* <Text>Home Page</Text> */}
 
       <View style={styles.parent}>
         <View style={styles.child}>
-          <Text style={styles.heading}>Today</Text>
-          <Text style={styles.subheading}>Saturday, April 1</Text>
+          {selectedDate.startOf("day").format("LL") ===
+          today.startOf("day").format("LL") ? (
+            <Text style={styles.heading}>Today</Text>
+          ) : (
+            <Text style={styles.heading}>On Date</Text>
+          )}
+          <Text style={styles.subheading}>
+            {selectedDate.format("dddd, MMMM D")}
+          </Text>
           <CalendarStrip
             scrollable={true}
             scrollerPaging={true}
@@ -62,9 +86,9 @@ export default function HomePage() {
               fontSize: 10,
               fontFamily: "Nunito-Sans",
             }}
-            // onDateSelected={(date) => setSelectedDate(date)}
-            startingDate={today}
-            selectedDate={today}
+            onDateSelected={(date) => setSelectedDate(date)}
+            startingDate={selectedDate}
+            selectedDate={selectedDate}
             highlightDateNumberStyle={{
               color: "#fff",
               fontSize: 15,
@@ -82,20 +106,38 @@ export default function HomePage() {
           />
         </View>
       </View>
-      <ScrollView
+      {/* <ScrollView
         style={styles.pageCards}
         contentContainerStyle={{ flexGrow: 1, alignItems: "center" }}
-      >
-        <View style={styles.thoughtBox}>
+      > */}
+      <MaskView element={<MaskedElement />}>
+        <FlatList
+          data={todayThoughts}
+          // style={styles.pageCards}
+          renderItem={({ item }) => (
+            <Thought
+              title={item.thought}
+              emotion={item.emotion}
+              time={item.date}
+            />
+            // <View>
+            //   <Text>{item.thought}</Text>
+            // </View>
+          )}
+          keyExtractor={(item) => item.id}
+        />
+      </MaskView>
+
+      {/* <View style={styles.thoughtBox}>
           <Text>How has your day been?</Text>
           <View>
             <Text>You haven't entered any thoughts yet</Text>
           </View>
-        </View>
-        <View style={styles.thoughtBox}>
+        </View> */}
+      {/* <View style={styles.thoughtBox}>
           <Text>Text2</Text>
-        </View>
-      </ScrollView>
+        </View> */}
+      {/* </ScrollView> */}
     </LinearGradient>
   );
 }
