@@ -1,6 +1,7 @@
 import { LinearGradient } from "expo-linear-gradient";
 import { useEffect, useState } from "react";
 import {
+  FlatList,
   Pressable,
   SafeAreaView,
   StyleSheet,
@@ -20,6 +21,8 @@ export default function Create({ navigation }) {
   const thoughts = data.thoughts;
   console.log(thoughts);
 
+  const emotions = ["upset", "sad", "neutral", "happy", "excited"];
+
   const [thought, setThought] = useState("");
   const [emotion, setEmotion] = useState("");
 
@@ -32,7 +35,7 @@ export default function Create({ navigation }) {
       id: id,
       thought: thought,
       emotion: emotion,
-      date: moment(),
+      date: moment(new Date()),
     };
     // console.log(currThought);
     dispatch(AddThought(currThought));
@@ -49,6 +52,9 @@ export default function Create({ navigation }) {
   // // useEffect(() => {
   // setCustomText(customTextProps);
   // }, []);
+
+  const onEmotionPress = (emote) => {};
+
   return (
     // <LinearGradient style={styles.container} colors={["#f7d6e0", "#fcdfc7"]}>
     <LinearGradient style={styles.container} colors={["#b2f7ef", "#eff6f6"]}>
@@ -67,9 +73,34 @@ export default function Create({ navigation }) {
 
           <View>
             <Text style={styles.subheading}>How does it make you feel?</Text>
+            <FlatList
+              data={emotions}
+              // style={styles.emotions}
+              horizontal
+              scrollEnabled={false}
+              renderItem={({ item }) => (
+                <Pressable
+                  style={styles.emotion}
+                  onPress={() => setEmotion(item)}
+                >
+                  <EmotionIcon emotion={item} />
+                  <Text style={styles.emotionText}>{item}</Text>
+                </Pressable>
+              )}
+            />
+            {/* <View style={styles.emotions}> */}
+            {/* {console.log(emotions)} */}
+            {/* {emotions.map((emote) => {
+                <Pressable
+                  style={styles.emotion}
+                  onPress={() => setEmotion(emote)}
+                >
+                  <EmotionIcon emotion={emote} />
+                  <Text style={styles.emotionText}>Sad</Text>
+                </Pressable>;
+              })} */}
 
-            <View style={styles.emotions}>
-              <Pressable
+            {/* <Pressable
                 style={styles.emotion}
                 onPress={() => setEmotion("upset")}
               >
@@ -103,8 +134,8 @@ export default function Create({ navigation }) {
               >
                 <EmotionIcon emotion="excited" />
                 <Text style={styles.emotionText}>Excited</Text>
-              </Pressable>
-            </View>
+              </Pressable>*/}
+            {/* </View> */}
           </View>
           <Pressable style={styles.button} onPress={saveThought}>
             <Text style={styles.buttonText}>Save</Text>

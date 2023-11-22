@@ -44,7 +44,7 @@ export default function HomePage() {
         todayT.push(d);
       }
     });
-    console.log(todayT);
+    // console.log(todayT);
     setTodayThoughts(todayT);
   }, [selectedDate, data]);
   return (
